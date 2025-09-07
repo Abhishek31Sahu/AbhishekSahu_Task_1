@@ -7,6 +7,12 @@ import courses from "./router/course.js";
 import user from "./router/user.js";
 import contact from "./router/contact.js";
 import cors from "cors";
+import path from "path";
+import { fileURLToPath } from "url";
+
+// Polyfill __dirname for ES modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, "../frontend/build")));
 
 app.get("*", (req, res) => {
