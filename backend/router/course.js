@@ -21,10 +21,10 @@ router
 router
   .route("/:id")
   .get(getCourseById)
-  .delete(verifyAuthorization, isCourseOwner, deleteCourse);
+  .delete(verifyAuthorization, deleteCourse);
 
 router
   .route("/:id/edit")
-  .put(verifyAuthorization, isCourseOwner, validateCourse, updateCourse);
+  .put(verifyAuthorization,  validateCourse, updateCourse);
 
 export default router;
