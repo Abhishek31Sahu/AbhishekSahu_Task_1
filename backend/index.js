@@ -1,11 +1,11 @@
-// if (process.env.NODE_ENV != "production") {
-//   require("dotenv").config();
-// }
 import express from "express";
 const app = express();
+import "dotenv/config";
 import mongoose from "mongoose";
 app.use(express.json());
-import listings from "./router/listings.js";
+import courses from "./router/course.js";
+import user from "./router/user.js";
+import contact from "./router/contact.js";
 import cors from "cors";
 app.use(
   cors({
@@ -14,8 +14,9 @@ app.use(
     credentials: true,
   })
 );
+const mongodb_url = process.env.ATLASDB_URL;
 mongoose
-  .connect("mongodb://127.0.0.1:27017/carbon-companion", {
+  .connect(mongodb_url, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
@@ -26,7 +27,9 @@ mongoose
     console.error("❌ MongoDB connection error:", err);
   });
 
-app.use("/listings", listings);
+app.use("/api/courses", courses);
+app.use("/api", user);
+app.use("/api/contact", contact);
 
 app.listen(5000, () => {
   console.log("Server is running on port 5000");

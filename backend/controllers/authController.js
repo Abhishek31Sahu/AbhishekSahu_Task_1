@@ -1,15 +1,21 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import User from "../model/user.js";
+import User from "../models/admin.js";
 
 export const signUp = async (req, res) => {
   try {
-    const { username, email, password } = req.body;
+    const { username, email, password, role } = req.body;
     const user = await User.findOne({ email });
 
     if (user) {
       return res.status(409).json({
         message: "User is already exist, you can login",
+        success: false,
+      });
+    }
+    if (role && role === "admin") {
+      res.status(405).json({
+        message: "Signup as admin is not allowed",
         success: false,
       });
     }
@@ -54,8 +60,10 @@ export const signIn = async (req, res) => {
         success: false,
       });
     }
-    console.log(email);
+    console.log(password);
+    console.log(user.password);
     const isPassEqual = await bcrypt.compare(password, user.password);
+    console.log(isPassEqual);
     if (!isPassEqual) {
       return res.status(403).json({ message: errorMsg, success: false });
     }
@@ -75,7 +83,7 @@ export const signIn = async (req, res) => {
     });
   } catch (e) {
     res.status(500).json({
-      message: "Internal server why",
+      message: "Internal server",
       success: false,
     });
   }

@@ -1,6 +1,10 @@
 import express from "express";
 const router = express.Router();
-import { isLoggedIn, isCourseOwner, validateCourse } from "../middleware.js";
+import {
+  verifyAuthorization,
+  isCourseOwner,
+} from "../middleware/isLoggedIn.js";
+import { validateCourse } from "../middleware/validateCourse.js";
 import {
   createCourse,
   getCourses,
@@ -12,15 +16,15 @@ import {
 router
   .route("/")
   .get(getCourses)
-  .post(isLoggedIn, validateCourse, createCourse);
+  .post(verifyAuthorization, validateCourse, createCourse);
 
 router
   .route("/:id")
   .get(getCourseById)
-  .delete(isLoggedIn, isCourseOwner, deleteCourse);
+  .delete(verifyAuthorization, isCourseOwner, deleteCourse);
 
 router
   .route("/:id/edit")
-  .put(isLoggedIn, isCourseOwner, validateCourse, updateCourse);
+  .put(verifyAuthorization, isCourseOwner, validateCourse, updateCourse);
 
 export default router;

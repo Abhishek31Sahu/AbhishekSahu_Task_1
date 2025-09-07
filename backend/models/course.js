@@ -5,6 +5,7 @@ const courseSchema = new mongoose.Schema({
   description: { type: String, required: true },
   duration: { type: Number, required: true },
   price: { type: Number, required: true },
+  owner: { type: mongoose.Schema.Types.ObjectId, ref: "Admin", required: true },
 });
 
 const Course = mongoose.model("Course", courseSchema);
