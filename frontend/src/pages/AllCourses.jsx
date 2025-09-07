@@ -10,8 +10,15 @@ function AllCourses() {
   useEffect(() => {
     const getInfo = async () => {
       try {
-        const res = await axios.get("https://abhisheksahu-task-1-2.onrender.com/api/courses",{headers: { "User-Agent": "Mozilla/5.0" }
+        const res = await axios.get("https://abhisheksahu-task-1-2.onrender.com/api/courses", {
+  headers: {
+    "Cache-Control": "no-cache",
+    "Pragma": "no-cache"
+  }
 });
+        console.log("Axios response:", res);
+console.log("Parsed data:", res.data);
+
         const { success, message, data } = res.data;
         if (success) {
           handleSuccess(message);
