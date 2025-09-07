@@ -17,7 +17,7 @@ const ContactRequests = () => {
   const navigate = useNavigate();
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/contact/admin/requests", {
+      .get("https://abhisheksahu-task-1-2.onrender.com/api/contact/admin/requests", {
         headers: {
           Authorization: localStorage.getItem("token"),
           "Content-type": "application/json",
