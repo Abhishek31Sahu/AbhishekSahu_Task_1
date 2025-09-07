@@ -13,7 +13,7 @@ import { fileURLToPath } from "url";
 // Polyfill __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-app.use(express.static(path.join(__dirname, "../frontend/build")));
+
 
 
 
@@ -36,6 +36,8 @@ app.disable("etag");
 app.use("/api/courses", courses);
 app.use("/api", user);
 app.use("/api/contact", contact);
+app.use(express.static(path.join(__dirname, "../frontend/build")));
+
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/build/index.html"));
 });
