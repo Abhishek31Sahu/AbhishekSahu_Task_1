@@ -42,7 +42,7 @@ function AddCourse() {
     // call backend Api to add in database course
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/courses",
+        "https://abhisheksahu-task-1-2.onrender.com/api/courses",
         course,
         {
           headers: {
