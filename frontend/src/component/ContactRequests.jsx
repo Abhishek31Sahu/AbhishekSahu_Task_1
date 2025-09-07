@@ -21,7 +21,6 @@ const ContactRequests = () => {
         headers: {
           Authorization: localStorage.getItem("token"),
           "Content-type": "application/json",
-          "User-Agent": "Mozilla/5.0"
         },
       })
       .then((res) => {
