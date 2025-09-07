@@ -25,7 +25,9 @@ function CourseInfo() {
     }
     const getInfo = async () => {
       try {
-        const res = await axios.get(`https://abhisheksahu-task-1-2.onrender.com/api/courses/${id}`);
+      const res = await axios.get(`https://abhisheksahu-task-1-2.onrender.com/api/courses/${id}`,{
+            headers: {"User-Agent": "Mozilla/5.0"}
+      });
         const { success, message, data } = res.data;
         if (success) {
           handleSuccess(message);
