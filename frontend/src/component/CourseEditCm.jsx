@@ -34,7 +34,7 @@ function CourseEditCm() {
     }
     const getInfo = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/courses/${id}`);
+        const res = await axios.get(`https://abhisheksahu-task-1-2.onrender.com/api/courses/${id}`);
         const { success, message, data } = res.data;
         if (success) {
           handleSuccess(message);
@@ -68,7 +68,7 @@ function CourseEditCm() {
     // call backend Api to add in database course
     try {
       const res = await axios.put(
-        `http://localhost:5000/api/courses/${id}/edit`,
+        `https://abhisheksahu-task-1-2.onrender.com/api/courses/${id}/edit`,
         course,
         {
           headers: {
