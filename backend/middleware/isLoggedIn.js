@@ -28,13 +28,14 @@ export const isCourseOwner = (req, res, next) => {
       if (!course) {
         return res.status(404).json({ message: "Course not found" });
       }
-
+      console.log(userId);
+      console.log(course.owner.toString());
       if (course.owner.toString() !== userId) {
         return res
           .status(403)
           .json({ message: "You don't have permission to edit this course!" });
       }
-
+      console.log("success");
       next();
     })
     .catch((err) => {
