@@ -34,7 +34,7 @@ mongoose
   .catch((err) => {
     console.error("❌ MongoDB connection error:", err);
   });
-
+app.disable("etag");
 app.use("/api/courses", courses);
 app.use("/api", user);
 app.use("/api/contact", contact);
