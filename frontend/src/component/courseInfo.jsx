@@ -25,7 +25,7 @@ function CourseInfo() {
     }
     const getInfo = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/courses/${id}`);
+        const res = await axios.get(`https://abhisheksahu-task-1-2.onrender.com/api/courses/${id}`);
         const { success, message, data } = res.data;
         if (success) {
           handleSuccess(message);
