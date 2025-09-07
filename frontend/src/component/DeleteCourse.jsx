@@ -20,7 +20,7 @@ function DeleteCourse({ id }) {
   }, []);
   const handelDelete = async () => {
     try {
-      let res = await axios.delete(`http://localhost:5000/api/courses/${id}`, {
+      let res = await axios.delete(`https://abhisheksahu-task-1-2.onrender.com/api/courses/${id}`, {
         headers: {
           Authorization: localStorage.getItem("token"),
           "Content-type": "application/json",
