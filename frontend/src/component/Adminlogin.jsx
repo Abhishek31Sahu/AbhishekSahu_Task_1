@@ -1,16 +1,73 @@
 import React, { useState } from "react";
 import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
+import axios from "axios";
+import { ToastContainer } from "react-toastify";
+import { handleError, handleSuccess } from "../utils";
+import { useNavigate } from "react-router-dom";
 
 function Adminlogin() {
-  const [info, setInfo] = useState({ email: "", password: "" });
-
+  const [info, setInfo] = useState({ email: "", password: "", role: "admin" });
+  const [errors, setErrors] = useState();
   const handleChange = (e) => {
     setInfo({ ...info, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const validateInputs = () => {
+    let isValid = true;
+    let tempErrors = {};
+
+    if (!info.email || !/\S+@\S+\.\S+/.test(info.email)) {
+      tempErrors.email = "Please enter a valid email address.";
+      isValid = false;
+    }
+
+    if (!info.password || info.password.length < 6) {
+      tempErrors.password = "Password must be at least 6 characters long.";
+      isValid = false;
+    }
+    setErrors(tempErrors);
+    return isValid;
+  };
+  const navigate = useNavigate();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (!validateInputs()) {
+      handleError(errors);
+
+      return;
+    }
     console.log(info);
+    try {
+      const result = await axios.post(
+        "http://localhost:5000/api/login",
+        info,
+        {
+          headers: {
+            content: "application/json",
+          },
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      const { success, message, jwtToken, name, error } = result.data;
+      if (success) {
+        handleSuccess(message);
+        localStorage.setItem("token", jwtToken);
+        localStorage.setItem("loggedInUser", name);
+        localStorage.setItem("role", "admin");
+        const timer = setTimeout(() => {
+          navigate("/courses");
+        }, 3000);
+      } else if (error) {
+        console.log(error);
+        handleError(error);
+      } else if (!success) {
+        handleError(message);
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -53,6 +110,7 @@ function Adminlogin() {
           </Button>
         </Form>
       </Card>
+      <ToastContainer />
     </Container>
   );
 }

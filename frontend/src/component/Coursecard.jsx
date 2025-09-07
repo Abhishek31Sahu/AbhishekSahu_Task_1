@@ -1,11 +1,18 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useNavigate } from "react-router-dom";
 // import "./Coursecard.css";
 function CourseCard({ data, courseKey }) {
+  const id = data._id;
+  const navigate = useNavigate();
+  const handelPage = (req, res) => {
+    navigate(`/courses/${id}`, { replace: false });
+  };
   return (
     <div
-      className="card shadow-sm mb-4"
+      className="card shadow-sm mb-4 "
       style={{ maxWidth: "100em", marginTop: "2rem", marginLeft: "2rem" }}
+      onClick={handelPage}
     >
       <div className="card-header bg-success text-white">
         <h5 className="mb-0">{data.title}</h5>

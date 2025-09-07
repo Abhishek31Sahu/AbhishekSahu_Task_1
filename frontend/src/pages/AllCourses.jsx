@@ -1,36 +1,41 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import CourseCard from "../component/Coursecard";
+import NavbarComp from "../Navbar";
+
+import { handleError, handleSuccess } from "../utils";
 function AllCourses() {
-  const courses = [
-    {
-      id: 1,
-      title: "Course 1",
-      description: "Description 1",
-      duration: "3 hours",
-      price: "$30",
-    },
-    {
-      id: 2,
-      title: "Course 2",
-      description: "Description 2",
-      duration: "4 hours",
-      price: "$40",
-    },
-    {
-      id: 3,
-      title: "Course 3",
-      description: "Description 3",
-      duration: "5 hours",
-      price: "$50",
-    },
-  ];
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    const getInfo = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/api/courses");
+        const { success, message, data } = res.data;
+        if (success) {
+          handleSuccess(message);
+          setCourses(data);
+        } else if (!success) {
+          handleError(message);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    getInfo();
+  }, []);
 
   return (
-    <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
-      {courses.map((course) => (
-        <CourseCard key={course.id} data={course} />
-      ))}
-    </div>
+    <>
+      <NavbarComp />
+      <div style={{ display: "flex", gap: "20px", flexWrap: "wrap" }}>
+        {courses.map((course) => (
+          <div key={course._id}>
+            <CourseCard data={course} />
+          </div>
+        ))}
+      </div>
+    </>
   );
 }
 
