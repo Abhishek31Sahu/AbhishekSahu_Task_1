@@ -33,7 +33,7 @@ const ContactUs = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/contact",
+        "https://abhisheksahu-task-1-2.onrender.com/api/contact",
         formData
       );
       const { success, message } = res.data;
